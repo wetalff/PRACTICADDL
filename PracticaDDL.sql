@@ -26,6 +26,7 @@ DROP DATABASE IF EXISTS bd_universidad;
 GO
 
 -- ============ SECCIÓN UP (construir) ============
+--EJERCICIO 1
 CREATE DATABASE bd_universidad; 
 GO
 USE bd_universidad; 
@@ -33,6 +34,7 @@ GO
 -- La función del "GO" es indicar que todas las instrucciones anteriores
 -- deben enviarse y ejecutarse como un bloque independiente.
 
+--EJERCICIO 2
 CREATE TABLE Carrera (
     id_carrera INT IDENTITY(1,1) Constraint Pk_idCarrera Primary key, 
     nombre NVARCHAR(150) NOT NULL, --Nvarchar para aceptar y evitar problemas con los acentos
@@ -62,7 +64,7 @@ CREATE TABLE Materia (
     semestre TINYINT NOT NULL
 );
 
-
+--EJERCICIO 3
 CREATE TABLE ESTUDIANTE (
     id_estudiante   INT IDENTITY(1,1) Constraint PK_idEstduiante PRIMARY KEY,
         -- IDENTITY(1,1) se usa para generar automáticamente
@@ -95,6 +97,7 @@ CREATE TABLE ESTUDIANTE (
 --       práctico es equivalente a RESTRICT.
 );
 
+--EJERCICIO 4
 CREATE TABLE Inscripcion (
     id_inscripcion INT PRIMARY KEY IDENTITY(1,1),
     -- IDENTITY(1,1) se usa para generar automáticamente
@@ -137,6 +140,7 @@ CREATE TABLE Inscripcion (
     UNIQUE (id_estudiante, id_materia, anio, periodo)
 );
 
+--EJERCICIO 5
 ALTER TABLE ESTUDIANTE
     ADD telefono NVARCHAR(20) NULL;
 GO
@@ -159,7 +163,7 @@ Alter table Materia
 
   go
    
-
+--EJERCICIO 6
 ALTER TABLE ESTUDIANTE
     ALTER COLUMN telefono NVARCHAR(25) NULL;
 GO
@@ -182,6 +186,7 @@ ALTER TABLE Inscripcion
     ALTER COLUMN nota_final DECIMAL(5, 2) NULL;
 GO
 
+--EJERCICIO 7
 SELECT name, definition
 FROM sys.check_constraints
 WHERE parent_object_id = OBJECT_ID(N'Materia');
@@ -224,6 +229,7 @@ WHERE parent_object_id = OBJECT_ID(N'Materia');
 
 ALTER TABLE Materia DROP CONSTRAINT ck_semestre_carrera;
 
+--EJERCICIO 8
 SELECT d.name AS default_name
 FROM sys.default_constraints d
 JOIN sys.columns c ON d.parent_column_id = c.column_id
@@ -237,7 +243,7 @@ GO
 
 
 
-
+--EJERCICIO 9
 --DROP TABLE IF EXISTS Inscripcion;
 --DROP TABLE IF EXISTS ESTUDIANTE;
 --DROP TABLE IF EXISTS Materia;
@@ -261,6 +267,7 @@ GO
 -- accidentalmente y da mayor control
 -- sobre la integridad de la base de datos.
 
+--EJERCICIO 10
 Insert into Materia (codigo, nombre, creditos, semestre) 
 values
 ('BDD','Basededatos',5,2),
@@ -322,3 +329,8 @@ Select * from Carrera
 Select * from Materia
 Select * from ESTUDIANTE
 Select * from Inscripcion
+
+SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Inscripcion'
+SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Materia'
+SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'ESTUDIANTE'
+SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 'Carrera'
